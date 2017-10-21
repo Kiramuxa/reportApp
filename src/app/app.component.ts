@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CrmComponent } from './crm/crm.component';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'app';
 }
