@@ -1,34 +1,39 @@
 <div class="container-fluid">
   <div class="row content">
-    <div class="col-md-3 align-self-start">
+    <div class="col-md-3 card">
       <div class="reports justify-content-between">
 
-        <div class="row reports-header">
+        <div class="row reports-header card-header align-items-baseline">
             <h4 class="col-md-6">Отчеты</h4>
-            <button type="button" class="btn btn-outline-primary btn-sm">
+            <button type="button" class="btn btn-outline-primary btn-sm"
+                    (click)="activateDateFilter()">
               Выбрать даты
             </button>
         </div>
 
-        <hr>
-
-        <div class="form-group row">
-          <label for="dateFrom" class="col-md-2 col-form-label col-form-label-sm">C</label>
-          <div class="col-md-10">
-            <input type="date" name="dateFrom" id="dateFrom" class="form-control form-control-sm">
-          </div>
+        <div *ngIf="isActiveDateFilter" style="margin-top: 1rem">
+            <div class="form-group row align-items-baseline">
+                <label for="dateFrom" class="col-md-2 col-form-label col-form-label-sm">С</label>
+                <div class="col-md-10">
+                  <input type="date" name="dateFrom" id="dateFrom" class="form-control form-control-sm">
+                </div>
+              </div>
+      
+              <div class="form-group row align-items-baseline">
+                <label for="dateTo" class="col-md-2 col-form-label col-form-label-sm">По</label>
+                <div class="col-md-10">
+                  <input type="date" name="dateTo" id="dateTo" class="form-control form-control-sm">
+                </div>
+              </div>
         </div>
 
-        <div class="form-group row">
-          <label for="dateTo" class="col-md-2 col-form-label col-form-label-sm">По</label>
-          <div class="col-md-10">
-            <input type="date" name="dateTo" id="dateTo" class="form-control form-control-sm">
-          </div>
-        </div>
-
-        <hr>
-
-        <div class="report-list col-md-12">
+        <div class="card-block report-list">
+            <div *ngFor="let report of reports">
+              <button type="button" class="btn btn-outline-primary">
+                <span>Дата: {{ report.date }}</span>
+                <span>Станок: {{ report.machine }}</span>
+              </button>
+            </div>
         </div>
         
       </div>

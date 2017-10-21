@@ -9,10 +9,15 @@ import { Report } from '../../model/report.model';
 export class ReportListComponent implements OnInit {
 
   private reports: Report[] = [];
+  private isActiveDateFilter = true;
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  activateDateFilter() {
+    this.isActiveDateFilter = !this.isActiveDateFilter;
   }
 
 }
