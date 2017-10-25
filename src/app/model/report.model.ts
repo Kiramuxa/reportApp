@@ -1,18 +1,13 @@
 import { Operator } from './operator.model';
+import { Order } from './order.model';
+import { ReportTable } from './reportTable.model';
 
-export class ReportLine {
-  innerID = '';
-  productName = '';
-  amountBot = 0;
-  amountTop = 0;
-}
 export class Report {
   constructor(
     public id?: number,
     public date?: Date,
     public machine?: string,
-    public operator?: Operator,
-    public shiftOneOrders: ReportLine[] = [],
-    public shiftTwoOrders: ReportLine[] = []
+    public shiftOneOrders?: ReportTable,
+    public shiftTwoOrders?: ReportTable
   ) { }
 }

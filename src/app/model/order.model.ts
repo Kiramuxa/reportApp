@@ -1,7 +1,7 @@
 export class Order {
-  innerID: string;
-  productName: string;
-  amountTop: number;
-  amountBot: number;
-  description: string;
+  innerID = '';
+  productName = '';
+  amountTop = 0;
+  amountBot = 0;
+  description = '';
 }

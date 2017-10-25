@@ -1,0 +1,141 @@
+<h1 class="text-center">Детали отчета</h1>
+
+<form class="" [formGroup]="reportForm" novalidate>
+  <!-- Дата -->
+  <div class="d-flex justify-content-center">
+    <div class="form-group p-2">
+      <label for="date" class="center-block">Дата
+        <input class="form-control-sm" type="date" name="date" id="date" formControlName="date">
+      </label>
+    </div>
+    <!-- Станок -->
+    <div class="form-group p-2">
+      <label for="machine" class="center-block">Станок
+        <input class="form-control-sm" type="text" name="machine" id="machine" formControlName="machine">
+      </label>
+    </div>
+  </div>
+
+  <div formGroupName="shiftOneOrders">
+    
+    <h3 class="text-center" style="margin: auto">1-ая смена</h3>
+     
+        <div class="">
+          <label for="operator" class="center-block">Оператор
+            <input class="form-control-sm" type="text" name="operator" id="operator" formControlName="operator">
+          </label>
+        </div>
+    
+
+      <div formArrayName="reportTable" style="margin-bottom: 1rem">
+          <!--  таблица 1-ой смены -->
+          <table class="table table-sm table-striped table-bordered">
+            <thead>
+              <tr class="">
+                <th>#</th>
+                <th>Номер заказа</th>
+                <th>Изделие</th>
+                <th>Top</th>
+                <th>Bot</th>
+                <th>Примечание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="reportTable1.controls.length == 0">
+                <td colspan="6" class="text-center">
+                  <span style="font-size: 1.5rem">Отчет - пуст.</span>
+                </td>
+              </tr>
+              <tr *ngFor="let order of reportTable1.controls; let i = index" [formGroupName]="i"
+                  class="">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                    <input class="form-control-sm" type="text" name="innerID" id="innerID" formControlName="innerID">
+                </td>
+                <td>
+                    <input class="form-control-sm" type="text" name="productName" id="productName" formControlName="productName">
+                </td>
+                <td>
+                    <input class="form-control-sm" type="number" name="amountTop" id="amountTop" formControlName="amountTop">
+                </td>
+                <td>
+                    <input class="form-control-sm" type="number" name="amountBot" id="amountBot" formControlName="amountBot">
+                </td>
+                <td>
+                    <textarea rows="1" class="form-control-sm" type="text" name="description" id="description" formControlName="description"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>      
+      
+          <button type="button" 
+                  class="btn btn-outline-success btn-sm" 
+                  (click)="addOneShiftOrder()">
+            Добавить заказ
+          </button>      
+      </div>
+  </div>
+
+  <div formGroupName="shiftTwoOrders">
+
+    <div class="form-group p-2">
+      <label for="operator" class="center-block">Оператор
+        <input class="form-control-sm" type="text" name="operator" id="operator" formControlName="operator">
+      </label>
+    </div>
+
+    <div formArrayName="reportTable">
+      <!-- таблица 1-ой смены -->
+      <h3 class="text-center">2-ая смена</h3>
+      <table class="table table-sm table-striped table-bordered">
+        <thead>
+          <tr class="">
+            <th>#</th>
+            <th>Номер заказа</th>
+            <th>Изделие</th>
+            <th>Top</th>
+            <th>Bot</th>
+            <th>Примечание</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="reportTable2.controls.length == 0">
+            <td colspan="6" class="text-center">
+              <span style="font-size: 1.5rem">Отчет - пуст.</span>
+            </td>
+          </tr>
+          <tr *ngFor="let order of reportTable2.controls; let i = index" [formGroupName]="i" class="">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              <input class="form-control-sm" type="text" name="innerID" id="innerID" formControlName="innerID">
+            </td>
+            <td>
+              <input class="form-control-sm" type="text" name="productName" id="productName" formControlName="productName">
+            </td>
+            <td>
+              <input class="form-control-sm" type="number" name="amountTop" id="amountTop" formControlName="amountTop">
+            </td>
+            <td>
+              <input class="form-control-sm" type="number" name="amountBot" id="amountBot" formControlName="amountBot">
+            </td>
+            <td>
+              <textarea class="form-control-sm" type="text" name="description" id="description" formControlName="description"></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <button type="button" class="btn btn-outline-success btn-sm" (click)="addTwoShiftOrder()">
+        Добавить заказ
+      </button>
+
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary btn float-right">
+    Сохранить отчет
+  </button>
+
+</form>
+
