@@ -29,15 +29,16 @@
 
       <div formArrayName="reportTable" style="margin-bottom: 1rem">
           <!--  таблица 1-ой смены -->
-          <table class="table table-sm table-striped table-bordered">
+          <table class="table table-sm table-striped table-bordered table-inverse ">
             <thead>
               <tr class="">
-                <th>#</th>
-                <th>Номер заказа</th>
+                <th></th>
+                <th>№ заказа</th>
                 <th>Изделие</th>
                 <th>Top</th>
                 <th>Bot</th>
                 <th>Примечание</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -50,26 +51,31 @@
                   class="">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>
-                    <input class="form-control-sm" type="text" name="innerID" id="innerID" formControlName="innerID">
+                    <input class="form-control-sm" type="text" name="innerID" id="innerID" formControlName="innerID" style="width: 7em">
                 </td>
                 <td>
-                    <input class="form-control-sm" type="text" name="productName" id="productName" formControlName="productName">
+                    <input class="form-control-sm" type="text" name="productName" id="productName" formControlName="productName" style="width: 13em">
                 </td>
                 <td>
-                    <input class="form-control-sm" type="number" name="amountTop" id="amountTop" formControlName="amountTop">
+                    <input class="form-control-sm" type="number" name="amountTop" id="amountTop" formControlName="amountTop" style="width: 5em">
                 </td>
                 <td>
-                    <input class="form-control-sm" type="number" name="amountBot" id="amountBot" formControlName="amountBot">
+                    <input class="form-control-sm" type="number" name="amountBot" id="amountBot" formControlName="amountBot" style="width: 5em">
                 </td>
                 <td>
-                    <textarea rows="1" class="form-control-sm" type="text" name="description" id="description" formControlName="description"></textarea>
+                    <textarea rows="1" class="form-control-sm" type="text" name="description" id="description" formControlName="description" style="width: 15em"></textarea>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="removeOrder(reportTable1, index)">
+                      Удалить
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>      
       
           <button type="button" 
-                  class="btn btn-outline-success btn-sm" 
+                  class="btn btn-success btn-sm" 
                   (click)="addOneShiftOrder()">
             Добавить заказ
           </button>      
@@ -77,8 +83,9 @@
   </div>
 
   <div formGroupName="shiftTwoOrders">
+    <h3 class="text-center">2-ая смена</h3>
 
-    <div class="form-group p-2">
+    <div class="">
       <label for="operator" class="center-block">Оператор
         <input class="form-control-sm" type="text" name="operator" id="operator" formControlName="operator">
       </label>
@@ -86,16 +93,16 @@
 
     <div formArrayName="reportTable">
       <!-- таблица 1-ой смены -->
-      <h3 class="text-center">2-ая смена</h3>
-      <table class="table table-sm table-striped table-bordered">
+      <table class="table table-sm table-striped table-bordered table-inverse">
         <thead>
           <tr class="">
-            <th>#</th>
+            <th></th>
             <th>Номер заказа</th>
             <th>Изделие</th>
             <th>Top</th>
             <th>Bot</th>
             <th>Примечание</th>
+            <th *ngIf="reportTable2.controls.length != 0"></th> 
           </tr>
         </thead>
         <tbody>
@@ -107,26 +114,31 @@
           <tr *ngFor="let order of reportTable2.controls; let i = index" [formGroupName]="i" class="">
             <th scope="row">{{ i + 1 }}</th>
             <td>
-              <input class="form-control-sm" type="text" name="innerID" id="innerID" formControlName="innerID">
+              <input class="form-control-sm" type="text" name="innerID" id="innerID" formControlName="innerID" style="width: 7em">
             </td>
             <td>
-              <input class="form-control-sm" type="text" name="productName" id="productName" formControlName="productName">
+              <input class="form-control-sm" type="text" name="productName" id="productName" formControlName="productName" style="width: 13em">
             </td>
             <td>
-              <input class="form-control-sm" type="number" name="amountTop" id="amountTop" formControlName="amountTop">
+              <input class="form-control-sm" type="number" name="amountTop" id="amountTop" formControlName="amountTop" style="width: 5em">
             </td>
             <td>
-              <input class="form-control-sm" type="number" name="amountBot" id="amountBot" formControlName="amountBot">
+              <input class="form-control-sm" type="number" name="amountBot" id="amountBot" formControlName="amountBot" style="width: 5em">
             </td>
             <td>
-              <textarea class="form-control-sm" type="text" name="description" id="description" formControlName="description"></textarea>
+              <textarea rows="1" class="form-control-sm" type="text" name="description" id="description" formControlName="description" style="width: 15em"></textarea>
+            </td>
+            <td>
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeOrder(reportTable2, index)">
+                  Удалить
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
 
 
-      <button type="button" class="btn btn-outline-success btn-sm" (click)="addTwoShiftOrder()">
+      <button type="button" class="btn btn-success btn-sm" (click)="addTwoShiftOrder()">
         Добавить заказ
       </button>
 

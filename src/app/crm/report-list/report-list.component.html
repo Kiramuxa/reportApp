@@ -1,0 +1,18 @@
+<div class="d-flex">
+  <div class="d-flex p-4">
+    <ul style="list-style: none; white-space: nowrap" class="">
+      <li *ngFor="let report of reports" class="m-1">
+        <button class="btn btn-outline-primary btn-sm"
+                (click)=selectReport(report)>
+          {{ report.date | date }} - {{ report.machine.name }}
+        </button>    
+      </li>
+    </ul>
+  </div>
+  <div class="d-flex p-4">
+      <app-report-detail *ngIf="selectedReport"
+                         
+      [report]="selectedReport">
+      </app-report-detail>
+  </div>
+</div>

@@ -8,7 +8,7 @@ var db = {
     machines: []
 };
 
-// Наполнение orders
+//#region  Наполнение orders
 for(var i=101; i<=1000; i++) {
     var order = {};
 
@@ -34,36 +34,15 @@ for(var i=101; i<=1000; i++) {
     order.innerID = innerID_prefix + innerID_number;
 
     //--------------количество модулей------------------------------//
-    order.amount = casual.random_element([12,16]); 
-
-    //---------------оператор станка --------------------------//
-    order.machineOperatorIdBOT = casual.integer(1, 10);
-    order.machineOperatorIdTOP = casual.integer(1, 10);
-
-    //----------------флаг литеры/------------------//
-    if (innerID_prefix == 'A') 
-          order.literaStatus = true
-    else  order.literaStatus = false;
-
-    //----------------статус------------------------//
-    order.status = casual.random_element(['ожидает','в работе','готов']);
-
-    //----------------дата изготовления-------------------//
-    if(order.status == 'готов') {
-        order.date = randomDate(new Date(2015,1,1), Date.now());
-    }
-
-    function randomDate(date1, date2){              
-      var randDate = randomInt(Number(date1), Number(date2));
-      return new Date(randDate);
-    }    
-    function randomInt(min, max) {
-      return Math.round(Math.random()*(max-min)+min);
-    }
+    var amount = casual.random_element([12,16]); 
+     order.amountTop = casual.random_element([0, amount]);
+     order.amountBot = casual.random_element([0, amount]);
 
     //-------------Добавление заказа в массив----------------------//
     db.orders.push(order);
 };
+
+//#endregion
 
 // Наполнение employees
 db.employees = [
@@ -135,23 +114,23 @@ db.products = [];
 //наполнение machines
 db.machines = [
     {
-        'id': 0,
+        'id': 1,
         'name': 'Pantera'
     },
     {
-        'id': 0,
+        'id': 2,
         'name': 'Pantera XV-1'
     },
     {
-        'id': 0,
+        'id': 3,
         'name': 'Pantera XV-2'
     },
     {
-        'id': 0,
+        'id': 4,
         'name': 'MHP'
     },
     {
-        'id': 0,
+        'id': 5,
         'name': 'Luna'
     }
 
@@ -159,38 +138,38 @@ db.machines = [
 
 //Наполнение reports
 var date = new Date();
-for (var i = 0; i <= 100; i++) {
+for (let i = 0; i <= 100; i++) {
     date.setDate(date.getDate() - 1);
-    for (var j = 0; j < 5; j++) {
+    for (let j = 0; j < 5; j++) {
         var report = {};
         
         report.id = i + '' + j;
         
         report.date = new Date(date);
         
-        report.machine = casual.random_element(
-            db.machines
-        );
+        report.machine = db.machines[j];
 
-        report.operator = casual.random_element(
-            db.employees
-        )
+        report.shiftOneOrders = {
+            operator: casual.random_element(db.employees),
+            orders: [
+                casual.random_element(db.orders),
+                casual.random_element(db.orders),
+                casual.random_element(db.orders),
+                casual.random_element(db.orders),
+                casual.random_element(db.orders)
+            ]
+        };
 
-        report.shiftOneOrders = [
-            casual.random_element(db.orders),
-            casual.random_element(db.orders),
-            casual.random_element(db.orders),
-            casual.random_element(db.orders),
-            casual.random_element(db.orders)
-        ];
-
-        report.shiftTwoOrders = [
-            casual.random_element(db.orders),
-            casual.random_element(db.orders),
-            casual.random_element(db.orders),
-            casual.random_element(db.orders),
-            casual.random_element(db.orders)
-        ];
+        report.shiftTwoOrders = {
+            operator: casual.random_element(db.employees),
+            orders: [
+                casual.random_element(db.orders),
+                casual.random_element(db.orders),
+                casual.random_element(db.orders),
+                casual.random_element(db.orders),
+                casual.random_element(db.orders)
+            ]
+        };
 
         db.reports.push(report);
     }
