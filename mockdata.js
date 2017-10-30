@@ -38,6 +38,9 @@ for(var i=101; i<=1000; i++) {
      order.amountTop = casual.random_element([0, amount]);
      order.amountBot = casual.random_element([0, amount]);
 
+
+    //--------------Примечания------------------//
+    order.description = '';
     //-------------Добавление заказа в массив----------------------//
     db.orders.push(order);
 };

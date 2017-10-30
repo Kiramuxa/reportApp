@@ -1,18 +1,50 @@
 <div class="d-flex">
-  <div class="d-flex p-4">
-    <ul style="list-style: none; white-space: nowrap" class="">
-      <li *ngFor="let report of reports" class="m-1">
-        <button class="btn btn-outline-primary btn-sm"
-                (click)=selectReport(report)>
+  <div class="d-flex flex-column p-2">
+      <!-- <p>Form value: {{ dateFilterForm.value | json }}</p>
+      <p>{{ dateFilterStart }}  {{ dateFilterEnd }}</p> -->
+    <form [formGroup]="dateFilterForm" class="dates d-flex flex-column pl-1" novalidate>
+      <h5 class="mt-1">Выбрать даты</h5>
+      <div class="form-group row mb-1">
+          <label for="dateFilterStart" class="col-sm-2 col-form-label col-form-label-sm">С </label>
+            <div class="col-sm-10">
+              <input class="form-control form-control-sm" 
+                     type="date" 
+                     id="dateFilterStart"
+                     formControlName="dateFilterStart">
+            </div>
+        </div>
+        <div class="form-group row ">
+            <label for="dateFilterEnd" class="col-sm-2 col-form-label col-form-label-sm">По </label>
+            <div class="col-sm-10">
+              <input class="form-control form-control-sm" 
+                     type="date" 
+                     id="dateFilterEnd"
+                     formControlName="dateFilterEnd">
+            </div>
+        </div>
+      </form>
+    <ul style="list-style: none; white-space: nowrap" class="ml-1 pl-0">
+      <li>
+        <button class="btn btn-success btn-sm mb-1"
+                (click)="createReport()">
+          Новый отчет
+        </button>
+      </li>
+      <li *ngFor="let report of reports" class="mb-1">
+        <button type="button" class="btn btn-outline-primary btn-sm"
+                (click)=selectReport(report)
+                [class.active]="report === selectedReport">
           {{ report.date | date }} - {{ report.machine.name }}
-        </button>    
+        </button>
       </li>
     </ul>
   </div>
   <div class="d-flex p-4">
       <app-report-detail *ngIf="selectedReport"
-                         
-      [report]="selectedReport">
+                         [report]="selectedReport"
+                         [machines]="machines"
+                         [operators]="operators"
+                         [creatingReport]="creatingReport">
       </app-report-detail>
   </div>
 </div>

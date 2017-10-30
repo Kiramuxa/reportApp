@@ -1,5 +1,11 @@
 export class Operator {
-  id: number;
-  name: string;
-  surname: string;
+  id  = 0;
+  name = '';
+  surname = '';
+
+  constructor() {}
+
+  public fullName() {
+    return `${this.name} ${this.surname}`;
+  }
 }
