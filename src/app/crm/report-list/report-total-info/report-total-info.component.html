@@ -1,0 +1,14 @@
+<div class="d-flex mb-5">
+    <div class="card">
+        <div class="card-block">
+          <ul style="list-style:none; padding-left: 0">
+            <li class="d-flex align-items-baseline" 
+                *ngFor="let line of reportTotalInfo">
+              <h4 class="m-2">{{ line.productName }}</h4>
+              <span class="m-2">TOP: {{ line.topAmount }}</span>
+              <span class="m-2">BOT: {{ line.botAmount }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+</div>

@@ -1,10 +1,11 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ReportTable } from '../../../model/reportTable.model';
 import { Report } from '../../../model/report.model';
 import { Order } from '../../../model/order.model';
 import { Machine } from '../../../model/machine.model';
 import { Operator } from '../../../model/operator.model';
+import { ReportRepository } from '../../../model/report.repository';
 
 @Component({
   selector: 'app-report-detail',
@@ -18,14 +19,19 @@ export class ReportDetailComponent implements OnChanges {
   @Input() operators: Operator[];
   @Input() creatingReport: boolean;
   reportForm: FormGroup;
+  firstShiftDisplay = false;
+  secondShiftDisplay = false;
+  @Output() onChangedReportOfArray = new EventEmitter<boolean>();
 
-  constructor(private builder: FormBuilder) {
+  constructor(private builder: FormBuilder,
+              private repo: ReportRepository) {
     this.createForm();
   }
 
   ngOnChanges() {
     this.setShiftReport();
     this.reportForm.patchValue({
+      id: this.report.id,
       date: this.report.date,
       machine: this.report.machine
     });
@@ -39,14 +45,15 @@ export class ReportDetailComponent implements OnChanges {
 
   createForm() {
     this.reportForm = this.builder.group({
+      id: 0,
       date: [ new Date(), Validators.required ],
-      machine: [''],
+      machine: '',
       shiftOneOrders: this.builder.group({
-        operator1: [ '' ],
+        operator1: '',
         reportTable1: this.builder.array([])
       }),
       shiftTwoOrders: this.builder.group({
-        operator2: [ '' ],
+        operator2: '',
         reportTable2: this.builder.array([])
       })
     });
@@ -111,5 +118,46 @@ export class ReportDetailComponent implements OnChanges {
 
   resetForm() {
     this.ngOnChanges();
+  }
+
+  toggleSecondShiftDisplay() {
+    this.secondShiftDisplay = !this.secondShiftDisplay;
+  }
+
+  toggleFirstShiftDisplay() {
+    this.firstShiftDisplay = !this.firstShiftDisplay;
+  }
+
+  onSubmit() {
+    this.report = this.prepareSaveReport();
+    this.repo.updateReport(this.report)
+             .subscribe( () => {
+               setTimeout(() => {
+                this.onChangedReportOfArray.emit();
+               }, 1);
+              });
+    // this.ngOnChanges();
+  }
+
+  prepareSaveReport(): Report {
+    const formModel = this.reportForm.value;
+    const shiftOneOrdersDeepCopy: ReportTable = {
+      operator: formModel.shiftOneOrders.operator1 as Operator,
+      orders: formModel.shiftOneOrders.reportTable1.map((order: Order) =>
+        Object.assign({}, order))
+    };
+    const shiftTwoOrdersDeepCopy: ReportTable = {
+      operator: formModel.shiftTwoOrders.operator2 as Operator,
+      orders: formModel.shiftTwoOrders.reportTable2.map((order: Order) =>
+        Object.assign({}, order))
+    };
+    const saveReport: Report = {
+      id: formModel.id as number,
+      date: formModel.date as Date,
+      machine: formModel.machine as Machine,
+      shiftOneOrders: shiftOneOrdersDeepCopy,
+      shiftTwoOrders: shiftTwoOrdersDeepCopy
+    };
+    return saveReport;
   }
 }

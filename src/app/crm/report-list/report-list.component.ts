@@ -49,15 +49,21 @@ export class ReportListComponent implements OnChanges {
     this.getReports();
   }
 
+  onChangedReportOfArray() {
+    this.getReports();
+  }
+
   selectReport(report: Report) {
     this.selectedReport = report;
   }
 
   createReport() {
     this.creatingReport = true;
-    const report: Report = new Report();
+    const report: Report = new Report(
+
+    );
     report.date = new Date();
-    report.machine = '';
+    report.machine = new Machine();
     report.shiftOneOrders = new ReportTable();
     report.shiftOneOrders.operator = new Operator();
     report.shiftOneOrders.orders = [];
