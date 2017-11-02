@@ -18,6 +18,7 @@ export class ReportDetailComponent implements OnChanges {
   @Input() machines: Machine[];
   @Input() operators: Operator[];
   @Input() creatingReport: boolean;
+  @Input() showDetails: boolean;
   reportForm: FormGroup;
   firstShiftDisplay = false;
   secondShiftDisplay = false;
@@ -29,6 +30,7 @@ export class ReportDetailComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    this.showDetails = false;
     this.setShiftReport();
     this.reportForm.patchValue({
       id: this.report.id,
@@ -130,13 +132,22 @@ export class ReportDetailComponent implements OnChanges {
 
   onSubmit() {
     this.report = this.prepareSaveReport();
-    this.repo.updateReport(this.report)
-             .subscribe( () => {
-               setTimeout(() => {
-                this.onChangedReportOfArray.emit();
-               }, 1);
-              });
-    // this.ngOnChanges();
+    if (!this.creatingReport) {
+      this.repo.updateReport(this.report)
+               .subscribe( () => {
+                 setTimeout(() => {
+                  this.onChangedReportOfArray.emit();
+                 }, 1);
+                });
+    } else {
+      this.repo.createReport(this.report)
+      .subscribe( () => {
+        setTimeout(() => {
+         this.onChangedReportOfArray.emit();
+         console.log('сотрудник добавлен!');
+        }, 1);
+       });
+    }
   }
 
   prepareSaveReport(): Report {
@@ -159,5 +170,15 @@ export class ReportDetailComponent implements OnChanges {
       shiftTwoOrders: shiftTwoOrdersDeepCopy
     };
     return saveReport;
+  }
+
+  deleteReport() {
+    this.repo.deleteReport(this.report)
+    .subscribe( () => {
+      setTimeout(() => {
+       this.onChangedReportOfArray.emit();
+       console.log('сотрудник удален!');
+      }, 1);
+     });
   }
 }

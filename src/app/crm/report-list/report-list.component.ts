@@ -22,6 +22,7 @@ export class ReportListComponent implements OnChanges {
    creatingReport= false;
          machines: Machine[];
         operators: Operator[];
+      showDetails: boolean;
 
   constructor(private repo: ReportRepository,
               private fb: FormBuilder) {
@@ -55,6 +56,7 @@ export class ReportListComponent implements OnChanges {
 
   selectReport(report: Report) {
     this.selectedReport = report;
+    this.showDetails = false;
   }
 
   createReport() {
@@ -71,6 +73,7 @@ export class ReportListComponent implements OnChanges {
     report.shiftTwoOrders.operator = new Operator();
     report.shiftTwoOrders.orders = [];
     this.selectedReport = report;
+    this.showDetails = true;
   }
 
   createForm() {
@@ -127,5 +130,9 @@ export class ReportListComponent implements OnChanges {
     } else {
       return 0;
     }
+  }
+
+  displayDetails() {
+    this.showDetails = true;
   }
 }

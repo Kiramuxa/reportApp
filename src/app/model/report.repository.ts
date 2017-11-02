@@ -34,6 +34,17 @@ export class ReportRepository {
              { headers: this.headers });
   }
 
+  createReport(report: Report) {
+    return this.http.post(this.baseUrl + '/reports/',
+                          JSON.stringify(report),
+                          { headers: this.headers });
+  }
+
+  deleteReport(report: Report) {
+    return this.http
+      .delete(this.baseUrl + '/reports/' + report.id);
+  }
+
   getOrders(): Observable<Order[]> {
     return this.http.get(this.baseUrl + '/orders')
       .map((res: Response) => res.json() as Order[]);

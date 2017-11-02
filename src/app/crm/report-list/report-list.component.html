@@ -44,11 +44,17 @@
       <app-report-total-info *ngIf="selectedReport"
                              [report]="selectedReport">
       </app-report-total-info>
-      <app-report-detail *ngIf="selectedReport"
+      <button *ngIf="selectedReport && !showDetails" 
+              (click)="displayDetails()"
+              type="button" class="btn btn-outline-primary btn btn-block">
+        Показать детали
+      </button>
+      <app-report-detail *ngIf="selectedReport && showDetails"
                          [report]="selectedReport"
                          [machines]="machines"
                          [operators]="operators"
                          [creatingReport]="creatingReport"
+                         [showDetails] = "showDetails"
                          (onChangedReportOfArray)="onChangedReportOfArray($event)">
       </app-report-detail>
     </div>

@@ -1,7 +1,7 @@
 <div class="d-flex flex-column justify-content-center">
-
+  
   <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" novalidate>
-    <!-- <p>{{ reportForm.value | json }}</p> -->
+    <!-- <p>{{ reporForm.value | json }}</p> -->
     <!-- Дата -->
     <div *ngIf="creatingReport" class="d-flex justify-content-center">
       <div class="form-group row ml-1 mr-1">
@@ -170,9 +170,13 @@
         Сохранить отчет
       </button>
 
-      <button type="reset" class="btn btn-danger btn" (click)="resetForm()">
+      <button type="reset" class="btn btn-success btn mr-3" (click)="resetForm()">
         Сбросить
       </button>
+
+      <button type="reset" class="btn btn-danger btn" (click)="deleteReport()">
+          Удалить
+        </button>
     </div>
   </form>
 </div>

@@ -2,6 +2,7 @@
     <div class="card">
         <div class="card-block">
           <ul style="list-style:none; padding-left: 0">
+            <li *ngIf="reportTotalInfo.length == 0"><h3>Пусто</h3></li>
             <li class="d-flex align-items-baseline" 
                 *ngFor="let line of reportTotalInfo">
               <h4 class="m-2">{{ line.productName }}</h4>
