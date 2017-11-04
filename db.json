@@ -61845,6 +61845,28 @@
         "orders": []
       },
       "id": "HJvML8u0-"
+    },
+    {
+      "date": "2017-11-06",
+      "machine": {},
+      "shiftOneOrders": {
+        "operator": {
+          "id": 2,
+          "name": "Иван",
+          "surname": "Тришкин",
+          "machine": "Luna"
+        },
+        "orders": []
+      },
+      "shiftTwoOrders": {
+        "operator": {
+          "id": 0,
+          "name": "",
+          "surname": ""
+        },
+        "orders": []
+      },
+      "id": "rkHF_S90Z"
     }
   ],
   "machines": [

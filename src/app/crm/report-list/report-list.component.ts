@@ -57,6 +57,7 @@ export class ReportListComponent implements OnChanges {
   selectReport(report: Report) {
     this.selectedReport = report;
     this.showDetails = false;
+    this.creatingReport = false;
   }
 
   createReport() {
